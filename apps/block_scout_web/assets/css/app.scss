@@ -98,6 +98,7 @@ $fa-font-path: "~@fortawesome/fontawesome-free/webfonts";
 @import "components/stakes_variables";
 @import "components/stakes_table";
 @import "components/form";
+@import "components/btn_add_to_mm";
 @import "components/btn_copy";
 @import "components/btn_qr";
 @import "components/btn_wallet";
@@ -136,8 +137,4 @@ $fa-font-path: "~@fortawesome/fontawesome-free/webfonts";
   dashboardLineColorMarket: $dashboard-line-color-market;
   dashboardLineColorPrice: $dashboard-line-color-price;
   dashboardLineColorTransactions: $dashboard-line-color-transactions;
-  primary: $primary;
-  secondary: $secondary;
-  darkprimary: $dark-primary;
-  darksecondary: $dark-secondary;
 }
