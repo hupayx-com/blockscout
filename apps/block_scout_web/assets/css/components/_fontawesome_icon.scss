@@ -25,6 +25,14 @@
       mask-size: 22px !important;
       -webkit-mask-size: 22px !important;
     }
+    &.medium {
+      -webkit-mask: url(/images/icons/fontawesome/medium.svg) no-repeat center;
+      mask: url(/images/icons/fontawesome/medium.svg) no-repeat center;
+      height: 22px;
+      width: 22px;
+      mask-size: 22px !important;
+      -webkit-mask-size: 22px !important;
+    }
     &.bar-chart {
       -webkit-mask: url(/images/icons/fontawesome/bar-chart.svg) no-repeat center;
       mask: url(/images/icons/fontawesome/bar-chart.svg) no-repeat center;
