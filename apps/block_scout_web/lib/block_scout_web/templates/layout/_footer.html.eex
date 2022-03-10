@@ -37,7 +37,7 @@
         <h3>Hupayx</h3>
         <ul>
           <li><a href="https://hupayx.io" rel="noreferrer" class="footer-link" target="_blank"><%= gettext("Hupayx link") %></a></li>
-          <li><%= gettext("EVM Explorer") %></li>
+          <li><a href="http://cosmoscan-test.hupayx.io" rel="noreferrer" class="footer-link" target="_blank"><%= gettext("Cosmos Explorer") %></a></li>
           <li><a href="mailto:help@hupayx.io" rel="noreferrer" class="footer-link"><%= gettext("CS") %></a></li>
         </ul>
       </div>
