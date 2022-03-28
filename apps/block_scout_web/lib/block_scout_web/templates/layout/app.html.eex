@@ -288,5 +288,13 @@
       }
     </script>
     <script defer src="<%= static_path(@conn, "/js/autocomplete.js") %>"></script>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-GHESY8KS1Y"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        ​
+        gtag('config', 'G-GHESY8KS1Y');
+    </script>
   </body>
 </html>
