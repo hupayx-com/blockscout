@@ -57,7 +57,7 @@ defmodule Explorer.Market.History.Source.CryptoCompare do
       %{
         closing_price: Decimal.new(item[2]),
         date: date(item[0]),
-        opening_price: Decimal.new(item[1]))
+        opening_price: Decimal.new(item[1])
       }
     end
   end
