@@ -39,7 +39,7 @@ defmodule Explorer.Market.History.Source.CryptoCompare do
   @spec base_url :: String.t()
   defp base_url do
     configured_url = Application.get_env(:explorer, __MODULE__, [])[:base_url]
-    configured_url || "https://min-api.cryptocompare.com"
+    configured_url || "https://www.mexc.com"
   end
 
   @spec date(unix_timestamp()) :: Date.t()
@@ -53,11 +53,11 @@ defmodule Explorer.Market.History.Source.CryptoCompare do
   defp format_data(data) do
     json = Jason.decode!(data)
 
-    for item <- json["Data"] do
+    for item <- json["data"] do
       %{
-        closing_price: Decimal.new(to_string(item["close"])),
-        date: date(item["time"]),
-        opening_price: Decimal.new(to_string(item["open"]))
+        closing_price: Decimal.new(item[2]),
+        date: date(item[0]),
+        opening_price: Decimal.new(item[1]))
       }
     end
   end
@@ -65,12 +65,12 @@ defmodule Explorer.Market.History.Source.CryptoCompare do
   @spec history_url(non_neg_integer()) :: String.t()
   defp history_url(previous_days) do
     query_params = %{
-      "fsym" => Explorer.coin(),
-      "limit" => previous_days,
-      "tsym" => "USD"
+      "symbol" => "HPX_USDT",
+      "limit" => 30,
+      "interval" => "1d"
     }
 
-    "#{base_url()}/data/histoday?#{URI.encode_query(query_params)}"
+    "#{base_url()}/open/api/v2/market/kline?#{URI.encode_query(query_params)}"
   end
 
   defp reject_zeros(items) do
