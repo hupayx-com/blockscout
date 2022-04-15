@@ -54,10 +54,11 @@ defmodule Explorer.Market.History.Source.CryptoCompare do
     json = Jason.decode!(data)
 
     for item <- json["data"] do
+      itemTuple = List.to_tuple(item)
       %{
-        closing_price: Decimal.new(item[2]),
-        date: date(item[0]),
-        opening_price: Decimal.new(item[1])
+        closing_price: Decimal.new(elem(itemTuple, 2)),
+        date: date(elem(itemTuple, 0)),
+        opening_price: Decimal.new(elem(itemTuple, 1))
       }
     end
   end
@@ -66,7 +67,7 @@ defmodule Explorer.Market.History.Source.CryptoCompare do
   defp history_url(previous_days) do
     query_params = %{
       "symbol" => "HPX_USDT",
-      "limit" => 30,
+      "limit" => previous_days+1,
       "interval" => "1d"
     }
 
