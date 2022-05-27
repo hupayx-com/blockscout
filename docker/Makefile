@@ -393,35 +393,35 @@ migrate_only:
 migrate: build postgres
 	@$(MAKE) -f $(THIS_FILE) migrate_only
 
+PG_EXIST := $(shell docker ps -a --filter name=${PG_CONTAINER_NAME} | grep ${PG_CONTAINER_NAME})
+PG_STARTED := $(shell docker ps --filter name=${PG_CONTAINER_NAME} | grep ${PG_CONTAINER_NAME})
 
 postgres:
 ifdef DATABASE_URL
 	@echo "==> DATABASE_URL of external DB provided. There is no need to start a container for DB."
 	@$(MAKE) -f $(THIS_FILE) migrate_only
 else
-	PG_EXIST := $(shell docker ps -a --filter name=${PG_CONTAINER_NAME} | grep ${PG_CONTAINER_NAME})
-	PG_STARTED := $(shell docker ps --filter name=${PG_CONTAINER_NAME} | grep ${PG_CONTAINER_NAME})
-	ifdef PG_EXIST
-		@echo "==> Checking PostrgeSQL container"
-	ifdef PG_STARTED
-		@echo "==> PostgreSQL Already started"
-		@$(MAKE) -f $(THIS_FILE) migrate_only
-	else
-		@echo "==> Starting PostgreSQL container"
-		@docker start $(PG_CONTAINER_NAME)
-		@$(MAKE) -f $(THIS_FILE) migrate_only
-	endif
-	else
-		@echo "==> Creating new PostgreSQL container"
-		@docker run -d --name $(PG_CONTAINER_NAME) \
-						-e POSTGRES_PASSWORD="" \
-						-e POSTGRES_USER="postgres" \
-						-e POSTGRES_HOST_AUTH_METHOD="trust" \
-						-p 5432:5432 \
-						$(PG_CONTAINER_IMAGE)
-		@sleep 1
-		@$(MAKE) -f $(THIS_FILE) migrate_only
-	endif
+ifdef PG_EXIST
+	@echo "==> Checking PostrgeSQL container"
+ifdef PG_STARTED
+	@echo "==> PostgreSQL Already started"
+	@$(MAKE) -f $(THIS_FILE) migrate_only
+else
+	@echo "==> Starting PostgreSQL container"
+	@docker start $(PG_CONTAINER_NAME)
+	@$(MAKE) -f $(THIS_FILE) migrate_only
+endif
+else
+	@echo "==> Creating new PostgreSQL container"
+	@docker run -d --name $(PG_CONTAINER_NAME) \
+					-e POSTGRES_PASSWORD="" \
+					-e POSTGRES_USER="postgres" \
+					-e POSTGRES_HOST_AUTH_METHOD="trust" \
+					-p 5432:5432 \
+					$(PG_CONTAINER_IMAGE)
+	@sleep 1
+	@$(MAKE) -f $(THIS_FILE) migrate_only
+endif
 endif
 
 start: build postgres 
@@ -438,3 +438,4 @@ run: start
 				start \
 				postgres \
 				run 
+
